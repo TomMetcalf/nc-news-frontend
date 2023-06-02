@@ -1,19 +1,43 @@
 import { useState, useEffect } from 'react';
-import { fetchCommentsByArticleId } from '../api';
+import { deleteComment, fetchCommentsByArticleId } from '../api';
 import BeatLoader from 'react-spinners/BeatLoader';
 import CommentAdder from './CommentAdder';
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
 export default function Comment({ articleId }) {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState();
 
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     setIsLoading(true);
-    fetchCommentsByArticleId(articleId).then((res) => {
-      setComments(res.comment);
-      setIsLoading(false);
-    });
+    fetchCommentsByArticleId(articleId)
+      .then((res) => {
+        setComments(res.comment);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   }, [articleId]);
+
+  const handleDeleteComment = (deleteId) => {
+    deleteComment(deleteId)
+      .then((status) => {
+        if (status === 204) {
+          alert('Comment successfully deleted.');
+          setComments((prevComments) =>
+            prevComments.filter((comment) => comment.comment_id !== deleteId)
+          );
+        }
+      })
+      .catch((err) => {
+        alert('There was an problem deleting your message. Please try again');
+      });
+  };
 
   if (isLoading) {
     return (
@@ -59,6 +83,16 @@ export default function Comment({ articleId }) {
               return (
                 <li key={comment_id}>
                   <section className="comments-section">
+                    <div className="delete-btn-container">
+                      {user.username === author ? (
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDeleteComment(comment_id)}
+                        >
+                          Delete
+                        </button>
+                      ) : null}
+                    </div>
                     <p>{body}</p>
                     <div className="comments-flex">
                       <p className="comment-detail">Posted by: {author}</p>

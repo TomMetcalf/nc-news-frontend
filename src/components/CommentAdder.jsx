@@ -42,6 +42,9 @@ export default function CommentAdder({ setComments }) {
           return [...currComments, newCommentFromApi];
         });
         setButtonDisabled(false);
+        setTimeout(() => {
+          setSuccessfulPost(false);
+        }, 2000);
       })
       .catch((err) => {
         alert(`Failed to post comment '${newComment}' Please try again.`);

@@ -195,7 +195,6 @@ h2 {
 }
 
 .avatar-img {
-  height: 150px;
   width: 150px;
   margin: 10px auto;
 }
@@ -244,7 +243,6 @@ h2 {
   display: flex;
 }
 
-
 .topic-list-card {
   border: 1px solid rgb(255, 0, 72);
   padding: 10px;
@@ -274,6 +272,27 @@ h2 {
   margin-left: 5px;
 }
 
+.successful-comment {
+background-color: rgb(195, 234, 211);
+  color: rgb(10, 103, 0);
+  padding: 10px;
+  font-weight: 600;
+  width: 90%;
+  margin: 0 auto 20px;
+}
+
+.delete-btn-container {
+  overflow: auto;
+}
+
+.delete-btn {
+  float: right;
+}
+
+.main-article-list {
+ margin: 15px 0px 0px;
+ ;
+}
 
 @media (max-width: 850px) {
   .article-details-home,

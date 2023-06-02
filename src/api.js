@@ -84,3 +84,11 @@ export function fetchArticlesByTopic(selectedTopic) {
     })
     .catch((err) => console.log(err));
 }
+
+export function deleteComment(delete_id) {
+  return ncNewsApi
+    .delete(`/comments/${delete_id}`).then((res) => {
+return res.status
+    })
+    .catch((err) => console.log(err));
+}
